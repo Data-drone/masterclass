@@ -33,7 +33,7 @@ sleep 60
 
 
 ranger_curl="curl -u admin:${ranger_password}"
-ranger_url="http://edge2ai-1.dim.local:5432/service"
+ranger_url="http://edge2ai-1.dim.local:6182/service"
 
 
 ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: application/json" ${ranger_url}/public/v2/api/roles  -d @- <<EOF
@@ -129,6 +129,7 @@ chmod +r *.keytab
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 
 
+# issues with etl user and those directories?
 kinit -kt /etc/security/keytabs/etl_user.keytab  etl_user/$(hostname -f)@${kdc_realm}
 hdfs dfs -mkdir -p /apps/hive/share/udfs/
 hdfs dfs -put /opt/cloudera/parcels/CDH/lib/hive/lib/hive-exec.jar /apps/hive/share/udfs/
