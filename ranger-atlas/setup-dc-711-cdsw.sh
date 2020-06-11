@@ -35,6 +35,7 @@ sleep 60
 ranger_curl="curl -u admin:${ranger_password}"
 ranger_url="http://edge2ai-1.dim.local:6182/service"
 
+echo "Curl 1"
 
 ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: application/json" ${ranger_url}/public/v2/api/roles  -d @- <<EOF
 {
@@ -55,7 +56,7 @@ ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: applicati
 }
 EOF
 
-
+echo "Curl 2"
 
 ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
   | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
@@ -77,6 +78,8 @@ ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
 }
 ]' > hive.json
 
+echo "Curl 3"
+
 ${ranger_curl} -i \
   -X PUT -H "Accept: application/json" -H "Content-Type: application/json" \
   -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
@@ -90,10 +93,12 @@ cd ../Scripts/cdp-policies
 resource_policies=$(ls Ranger_Policies_ALL_*.json)
 tag_policies=$(ls Ranger_Policies_TAG_*.json)
 
-#import resource based policies
+#import resource based policies'
+echo "Resource Based Policies import"
 ${ranger_curl} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${resource_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-all.json" "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs,tag,hbase,yarn,hive,knox,kafka,atlas,solr"
 
 #import tag based policies
+echo "tag based policies Based Policies import"
 ${ranger_curl} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${tag_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-tag.json" "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
 
 cd ../../HortoniaMunichSetup
