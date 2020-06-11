@@ -32,8 +32,8 @@ echo "Waiting 30s for Ranger usersync..."
 sleep 60
 
 
-ranger_curl="curl -u admin:${ranger_password}"
-ranger_url="http://edge2ai-1.dim.local:6182/service"
+ranger_curl="curl -k -u admin:${ranger_password}"
+ranger_url="https://localhost:6182/service"
 
 echo "Curl 1"
 
@@ -77,6 +77,7 @@ ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
 	"description": "Resources Not Accessed Together?"
 }
 ]' > hive.json
+
 
 echo "Curl 3"
 
