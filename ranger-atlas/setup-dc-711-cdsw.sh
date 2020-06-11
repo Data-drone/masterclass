@@ -136,7 +136,7 @@ hdfs dfs -put /opt/cloudera/parcels/CDH/lib/hive/lib/hive-exec.jar /apps/hive/sh
 hdfs  dfs -chown -R hive:hadoop  /apps
 
 
-echo "Imorting data..."
+echo "Importing data..."
 
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./05-create-hdfs-user-folders.sh
