@@ -136,6 +136,7 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 
 
 # issues with etl user and those directories?
+# etl user needs to be superuser in order for these lines to run right 
 kinit -kt /etc/security/keytabs/etl_user.keytab  etl_user/$(hostname -f)@${kdc_realm}
 hdfs dfs -mkdir -p /apps/hive/share/udfs/
 hdfs dfs -put /opt/cloudera/parcels/CDH/lib/hive/lib/hive-exec.jar /apps/hive/share/udfs/
