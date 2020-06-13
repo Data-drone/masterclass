@@ -35,7 +35,7 @@ sleep 60
 ranger_curl="curl -k -u admin:${ranger_password}"
 ranger_url="https://localhost:6182/service"
 
-echo "Curl 1"
+echo "Send Admin Setting"
 
 ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: application/json" ${ranger_url}/public/v2/api/roles  -d @- <<EOF
 {
@@ -56,7 +56,7 @@ ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: applicati
 }
 EOF
 
-echo "Curl 2"
+echo "Send Deny And Exception policies"
 
 ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
   | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
@@ -79,7 +79,7 @@ ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
 ]' > hive.json
 
 
-echo "Curl 3"
+echo "Send Hive policies"
 
 ${ranger_curl} -i \
   -X PUT -H "Accept: application/json" -H "Content-Type: application/json" \
